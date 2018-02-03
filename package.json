@@ -1,6 +1,6 @@
 {
   "name": "qron-formula-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Formula parser",
   "browser": "dist/formula-parser.js",
   "main": "lib/index.js",
