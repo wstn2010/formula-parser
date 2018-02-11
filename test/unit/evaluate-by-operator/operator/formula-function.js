@@ -32,4 +32,11 @@ describe('formula function operator', () => {
     expect(result1).toBe(15.8);
     expect(result2).toBe(4);
   });
+
+  it('should correctly process formula (SUMIFS)', () => {
+    const result = func('SUMIFS')([1, 2, 3, 4], ['P', 'P', 'Q', 'Q'], 'P');
+
+    expect(result).toBe(3);
+  });
+
 });
