@@ -587,11 +587,48 @@ describe('.parse() math-trig formulas', () => {
 
   it('SUMIFS', () => {
     parser.on('callRangeValue', (a, b, done) => {
-      done([[1, 2, 3]]);
+      if (a.label === 'A1' && b.label === 'A4') {
+        done([[1, 2, 3, 4]]);
+      } else if (a.label === 'B1' && b.label === 'B4') {
+        done([['P', 'P', 'Q', 'Q']]);
+      }
     });
 
-    expect(parser.parse('SUMIFS(A1:C1, ">1", "<3")')).toMatchObject({error: null, result: 2});
+    expect(parser.parse('SUMIFS(A1:A4, B1:B4, "Q")')).toMatchObject({error: null, result: 7});
+
+    expect(parser.parse('SUMIFS(A1:A4, B1:B4, "Q") + SUMIFS(A1:A4, B1:B4, "Q")')).toMatchObject({error: null, result: 14});
+
+    expect(parser.parse('SUMIFS(A1:A4, B1:B4, "Q") + SUMIFS(A1:A4, B1:B4, "Q") + SUMIFS(A1:A4, B1:B4, "Q")'))
+      .toMatchObject({error: null, result: 21});
+
+    expect(parser.parse('SUMIFS(A1:A4, B1:B4, "Q") + SUMIFS(A1:A4, B1:B4, "Q") * 2 + SUMIFS(A1:A4, B1:B4, "Q") * 3'))
+      .toMatchObject({error: null, result: 42});
   });
+
+  it('SUMIFS-debug', () => {
+    parser.on('callRangeValue', (a, b, done) => {
+      if (a.label === 'A1' && b.label === 'A5') {
+        done([['PC1', 'PC2', 'PC1', 'PC1', 'PC2']]);
+      } else if (a.label === 'B1' && b.label === 'B5') {
+        done([['SC1', 'SC1', 'SC2', 'SC3', 'SC3']]);
+      } else if  (a.label === 'C1' && b.label === 'C5') {
+        done([[1, 2, 3, 4, 5]]);
+      }
+    });
+
+    expect(parser.parse('sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC1") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC2") * 2'))
+      .toMatchObject({error: null, result: 7});
+
+    expect(parser.parse('sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC1") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC2")   + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC3") '))
+      .toMatchObject({error: null, result: 8});
+
+  });
+
+  // it('IFERROR-debug', () => {
+  //   expect(parser.parse('IFERROR(3/1, 0')).toMatchObject({error: null, result: 3});
+  //   expect(parser.parse('IFERROR(3/0, 0')).toMatchObject({error: null, result: 0});
+  //
+  // });
 
   it('SUMPRODUCT', () => {
     parser.on('callRangeValue', (a, b, done) => {
