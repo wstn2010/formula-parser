@@ -624,6 +624,12 @@ describe('.parse() math-trig formulas', () => {
 
   });
 
+  // it('IFERROR-debug', () => {
+  //   expect(parser.parse('IFERROR(3/1, 0')).toMatchObject({error: null, result: 3});
+  //   expect(parser.parse('IFERROR(3/0, 0')).toMatchObject({error: null, result: 0});
+  //
+  // });
+
   it('SUMPRODUCT', () => {
     parser.on('callRangeValue', (a, b, done) => {
       if (a.label === 'A1' && b.label === 'B3') {

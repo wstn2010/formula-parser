@@ -172,12 +172,11 @@ class Parser extends Emitter {
    * @private
    */
   _callCellValue(label) {
-    label = label.toUpperCase();
+    const [row, column, sheet] = extractLabel(label);
 
-    const [row, column] = extractLabel(label);
     let value = void 0;
 
-    this.emit('callCellValue', {label, row, column}, (_value) => {
+    this.emit('callCellValue', {label: label, row, column, sheet}, (_value) => {
       value = _value;
     });
 
@@ -193,11 +192,9 @@ class Parser extends Emitter {
    * @private
    */
   _callRangeValue(startLabel, endLabel) {
-    startLabel = startLabel.toUpperCase();
-    endLabel = endLabel.toUpperCase();
+    const [startRow, startColumn, startSheet] = extractLabel(startLabel);
+    const [endRow, endColumn, endSheet] = extractLabel(endLabel);
 
-    const [startRow, startColumn] = extractLabel(startLabel);
-    const [endRow, endColumn] = extractLabel(endLabel);
     let startCell = {};
     let endCell = {};
 
@@ -219,6 +216,13 @@ class Parser extends Emitter {
 
     startCell.label = toLabel(startCell.row, startCell.column);
     endCell.label = toLabel(endCell.row, endCell.column);
+
+    if (startSheet) {
+      startCell.sheet = startSheet;
+    }
+    if (endSheet) {
+      endCell.sheet = endSheet;
+    }
 
     let value = [];
 
