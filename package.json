@@ -1,6 +1,6 @@
 {
   "name": "qron-formula-parser",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Formula parser",
   "browser": "dist/formula-parser.js",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
   "jsnext:main": "es/index.js",
   "scripts": {
     "clean": "rimraf lib dist es coverage",
-    "lint": "eslint src test",
+    "lint": "eslint src",
     "check": "npm run lint && npm run test",
     "test": "cross-env BABEL_ENV=commonjs jest",
     "coverage": "cross-env BABEL_ENV=commonjs jest --coverage",

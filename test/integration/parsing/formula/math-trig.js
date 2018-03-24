@@ -611,7 +611,7 @@ describe('.parse() math-trig formulas', () => {
         done([['PC1', 'PC2', 'PC1', 'PC1', 'PC2']]);
       } else if (a.label === 'B1' && b.label === 'B5') {
         done([['SC1', 'SC1', 'SC2', 'SC3', 'SC3']]);
-      } else if  (a.label === 'C1' && b.label === 'C5') {
+      } else if (a.label === 'C1' && b.label === 'C5') {
         done([[1, 2, 3, 4, 5]]);
       }
     });
@@ -619,7 +619,8 @@ describe('.parse() math-trig formulas', () => {
     expect(parser.parse('sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC1") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC2") * 2'))
       .toMatchObject({error: null, result: 7});
 
-    expect(parser.parse('sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC1") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC2")   + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC3") '))
+    /* eslint-disbale no-alert, no-console */
+    expect(parser.parse('sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC1") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC2") + sumifs(c1:c5, a1:a5, "PC1", B1:B5, "SC3")'))
       .toMatchObject({error: null, result: 8});
 
   });
