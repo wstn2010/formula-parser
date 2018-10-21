@@ -31,7 +31,7 @@ parser.parse('SUM(1, 6, 7)'); // It returns `Object {error: null, result: 14}`
 ```
 ## Features
 
-**Note:** New feature 'Sheet reference' is not reflected in the following descriptions.  
+**Note:** New feature 'Sheet reference' has not been reflected yet in the following descriptions.  
 
 It supports:
 
